@@ -1,11 +1,11 @@
 
 
 % n - number of days
-% x - fraction of caffeinated 
+% x - fraction of caffeinated
 
 nMax = 21; % max number of days to simulate
-c = -0.8;
-d = 0.156;
+c = -0.8005;
+d = 0.1560006;
 
 % N = 10; % number of scoops in each jar
 x = zeros(1,nMax); % fraction caffeinated
@@ -15,18 +15,14 @@ y = zeros(1,nMax); % fraction caffeinated
 y(1) = 0.1; % initial fraction caffeinated
 
 for n=1:nMax
-    
+
     x(n+1) =  (x(n))^2 - (y(n))^2 + c;
-    y(n+1) = 2*x(n)*y(n) +  d; 
+    y(n+1) = 2*x(n)*y(n) +  d;
     %x(n) = x(n-1) - 1/N*x(n-1);
-    
-end % finished 
 
-% THE MODEL ^
-% ------------------------------------------
-% THE BEHAVIOR / THE OUTPUT ? 
+end % finished
 
-figure(1); 
+figure(1);
 plot(x,'ob');
 ylabel('x(n)')
 xlabel('n')
@@ -42,9 +38,11 @@ ylabel('y(n)')
 xlabel('n')
 
 %% Part d
-xStart = -2 + (2+2)*rand(1, 100) ;
+kMax = 1e5; % change for future parts
 
-yStart = -2 + (2+2)*rand(1, 100) ;
+xStart = -2 + (2+2)*rand(1, kMax) ;
+
+yStart = -2 + (2+2)*rand(1, kMax) ;
 
 figure(4)
 plot(xStart, yStart, 'ok');
@@ -53,24 +51,29 @@ xlabel('yStart')
 
 
 %% part e
-
-for n=1:nMax
-    
-    xStart(n+1) =  (xStart(n))^2 - (yStart(n))^2 + c;
-    yStart(n+1) = 2*xStart(n)*yStart(n) +  d; 
-    
-end % finished 
-
-figure(5)
-plot(xStart, yStart, '.k');
-ylabel('x(n)')
-xlabel('y(n)')
-
-figure(5)
+figure(5);
+clf;
 hold on
-if (xStart(22) >2 & yStart(22)>2 & xStart(22) < -2 & yStart(22) < -2 ) 
-    plot(xStart(1), yStart(1), 'or') 
-else
-    plot(xStart(1),yStart(1),'ob' )
-end  
+
+newxMax = 22;
+
+
+for k= 1:kMax
+
+    x(1) = xStart(k);
+    y(1) = yStart(k);
+
+    for j = 1:newxMax
+        x(j+1) =  (x(j))^2 - (y(j))^2 + c;
+        y(j+1) = 2*x(j)*y(j) +  d;
+
+    end
+
+    if(x(22) < -2 || x(22) > 2 || y(22) < -2 || y(22) > 2 || isnan(x(22)) || isnan(y(22)))
+
+        plot(xStart(k),yStart(k),'.r')
+    else
+        plot(xStart(k),yStart(k), '.b')
+    end
+end % finish looping through k
 
