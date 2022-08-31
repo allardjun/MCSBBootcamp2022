@@ -99,19 +99,9 @@ fnew{8} = @(v,w,t) f(v,w) + I(t) - D*(v(7) - 2*v(8) +v(9)); %new f with I includ
 fnew{9} = @(v,w,t) f(v,w) + I(t) - D*(v(8) - 2*v(9) +v(10)); %new f with I included
 fnew{10} = @(v,w,t) f(v,w) + I(t) - D*(v(9) - 2*v(10) +v(1)); %new f with I included
 
- g{1} = g;
- g{2} = g;
- g{3} = g;
- g{4} = g;
- g{5} = g;
-g{6} = g;
-g{7} = g;
-g{8} = g;
-g{9} = g;
-g{10} = g;
-
+g{1:10} = g;
 F = [fnew(1); fnew(2); fnew(3); fnew(4); fnew(5); fnew(6); fnew(7); fnew(8); fnew(9); fnew(10)];
-% G = [g(1); g(2); g(3); g(4); g(5); g(6); g(7); g(8); g(9); g(10)];
+G = [];
 
 
 %% single cell
